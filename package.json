@@ -1,11 +1,10 @@
 {
   "name": "ecommerce-api-using-nodejs-express-mongoose",
   "version": "1.0.0",
-  "description": "This repo contains every course section in a single branch  and the finished project files for all the projects contained in the master branch",
+  "description": "ecommerce api using nodejs express mongoose",
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "dev": "node --watch --watch-preserve-output server.js"
   },
@@ -14,7 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
+    "express-async-handler": "^1.2.0",
     "mongoose": "^8.13.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "slugify": "^1.6.6"
   }
 }
