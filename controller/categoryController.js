@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import slugify from 'slugify';
 
-import Category from '../models/CategoryModel';
+import Category from '../models/categoryModel.js';
 
 // @desc    Get list of categories
 // @route   GET /api/v1/categories
