@@ -2,11 +2,12 @@ import asyncHandler from 'express-async-handler';
 import slugify from 'slugify';
 
 import Category from '../models/categoryModel.js';
+import ApiError from '../utils/apiError.js';
 
-// @desc    Get list of categories
 // @route   GET /api/v1/categories
 // @access  Public
 export const getCategories = asyncHandler(async (req, res) => {
+  // Pagination
   const page = req.query.page * 1 || 1;
   const limit = req.query.limit * 1 || 5;
   const skip = (page - 1) * limit;
@@ -15,31 +16,28 @@ export const getCategories = asyncHandler(async (req, res) => {
   res.status(200).json({ results: categories.length, page, data: categories });
 });
 
-// @desc    Get specific category by id
 // @route   GET /api/v1/categories/:id
 // @access  Public
-export const getCategory = asyncHandler(async (req, res) => {
+export const getCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const category = await Category.findById(id);
   if (!category) {
-    res.status(404).json({ msg: `No category for this id ${id}` });
+    return next(new ApiError(`No category found for this id ${id}`, 404));
   }
   res.status(200).json({ data: category });
 });
 
-// @desc    Create category
 // @route   POST  /api/v1/categories
 // @access  Private
-export const createCategory = asyncHandler(async (req, res) => {
+export const createCategory = asyncHandler(async (req, res, next) => {
   const name = req.body.name;
   const category = await Category.create({ name, slug: slugify(name) });
   res.status(201).json({ data: category });
 });
 
-// @desc    Update specific category
 // @route   PUT /api/v1/categories/:id
 // @access  Private
-export const updateCategory = asyncHandler(async (req, res) => {
+export const updateCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const { name } = req.body;
 
@@ -50,20 +48,19 @@ export const updateCategory = asyncHandler(async (req, res) => {
   );
 
   if (!category) {
-    res.status(404).json({ msg: `No category for this id ${id}` });
+    return next(new ApiError(`No category found for this id ${id}`, 404));
   }
   res.status(200).json({ data: category });
 });
 
-// @desc    Delete specific category
 // @route   DELETE /api/v1/categories/:id
 // @access  Private
-export const deleteCategory = asyncHandler(async (req, res) => {
+export const deleteCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const category = await Category.findByIdAndDelete(id);
 
   if (!category) {
-    res.status(404).json({ msg: `No category for this id ${id}` });
+    return next(new ApiError(`No category found for this id ${id}`, 404));
   }
   res.status(204).send();
 });
