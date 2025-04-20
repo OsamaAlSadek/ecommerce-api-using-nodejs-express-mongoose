@@ -2,6 +2,7 @@ import express, { json } from 'express';
 import morgan from 'morgan';
 import dbConnection from './config/database.js';
 import globalError from './middlewares/errorMiddleware.js';
+import brandRoute from './routes/brandRoute.js';
 import categoryRoute from './routes/categoryRoute.js';
 import subCategoryRoute from './routes/subCategoryRoute.js';
 import ApiError from './utils/apiError.js';
@@ -25,6 +26,7 @@ if (process.env.NODE_ENV === 'development') {
 // Mount Routes
 app.use('/api/v1/categories', categoryRoute);
 app.use('/api/v1/subcategories', subCategoryRoute);
+app.use('/api/v1/brands', brandRoute);
 
 app.all(/.*/, (req, res, next) => {
   next(new ApiError(`Can't find this route: ${req.originalUrl}`, 400));
@@ -34,7 +36,7 @@ app.use(globalError);
 
 const PORT = process.env.PORT || 6000;
 const server = app.listen(PORT, () => {
-  console.log(`Server is running at port ${PORT}`);
+  console.log(`Server is running at -- port ${PORT}`);
 });
 
 process.on('unhandledRejection', (err) => {
