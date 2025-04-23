@@ -18,7 +18,4 @@ const categorySchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// 2- Create model
-const CategoryModel = mongoose.model('Category', categorySchema);
-
-export default CategoryModel;
+export default mongoose.model('Category', categorySchema);

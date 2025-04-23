@@ -22,6 +22,4 @@ const subCategorySchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const SubCategoryModel = mongoose.model('subCategory', subCategorySchema);
-
-export default SubCategoryModel;
+export default mongoose.model('SubCategory', subCategorySchema);
